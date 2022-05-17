@@ -1,5 +1,5 @@
 # Extrapolation-Boundary-Condition
-Extrapolation Boundary Condition is implemented in OpenFOAM. This boundary condition is strongly recommended to use at the outlet of the flow domain. Any flow properties can be extrapolated from the internal field (p U T alpha .. etc). \
+Extrapolation Boundary Condition is implemented in OpenFOAM. This boundary condition is strongly recommended to use at the outlet of the flow domain. Any flow properties can be extrapolated from the internal field (`p`, `U`, `T`, `alpha` .. etc). \
 Extrapolation boundary condition doesnot take any inputs from the user and hence can be simply implemented as, \
 ```
 patch_name 
@@ -33,7 +33,7 @@ LIB_LIBS = \
     -lmeshTools \
     -lfiniteVolume
 ```
-4. Run wmake
+4. Run `wmake`
 5. Last line of the successful compilation will be,
 ```
 -lOpenFOAM -lfileFormats -lsurfMesh -lmeshTools -lfiniteVolume  -o $WM_PROJECT_USER_DIR/platforms/linux64GccDPInt32Opt/lib/libcustomfiniteVolume.so
