@@ -65,31 +65,28 @@ Foam::extrapolationFvPatchField<Type>::extrapolationFvPatchField
     bcells_(iF.mesh().boundary()[p.index()].faceCells()),
     icells_(p.size(), -1)
 {
-  Info << "Inside dictionary Constructor" << endl;
-  Info << "Important Cells : " << endl;
-  Info << "     boundary Cells : " << bcells_ << endl;
+  // Finding the cells next to the boundary cells
   forAll (bcells_, celli)
   {
     forAll (neighbour_, i)
     {
       if (celli == 0)
-	    {
-	       if (neighbour_[i] == bcells_[celli])
-	       {
-             icells_[celli] = owner_[i];
-	       }
-	    }
-	    else
-	    {
-	       if ((neighbour_[i] == bcells_[celli]) && (owner_[i] != bcells_[celli-1]))
-	       {
-             icells_[celli] = owner_[i];
-	       }
-	    }
+      {
+        if (neighbour_[i] == bcells_[celli])
+        {
+     	    icells_[celli] = owner_[i];
+        }
+      }
+      else
+      {
+        if ((neighbour_[i] == bcells_[celli]) && (owner_[i] != bcells_[celli-1]))
+        {
+           icells_[celli] = owner_[i];
+        }
+      }
     }
   }
-  Info << "     internal Cells : " << icells_ << endl;
-  Info << "   cell centers : " << celliF[0] << endl;
+  // Evaluate the boundary Condition
   evaluate();
 }
 
@@ -170,7 +167,6 @@ void Foam::extrapolationFvPatchField<Type>::autoMap
 {
     fvPatchField<Type>::autoMap(m);
     gradient_.autoMap(m);
-    Info << "Extrapolation autoMap function is called! " << endl;
 }
 
 
@@ -187,13 +183,12 @@ void Foam::extrapolationFvPatchField<Type>::rmap
         refCast<const extrapolationFvPatchField<Type>>(ptf);
 
     gradient_.rmap(fgptf.gradient_, addr);
-    Info << "Extrapolation rmap function is called! " << endl;
 }
 
 template<class Type>
 void Foam::extrapolationFvPatchField<Type>::findGradient()
 {
-  Info << "Inside Find Gradient " << endl;
+  // Finding Gradient of the field at the boundary cell center
   forAll(bcells_, i)
   {
     gradient_[i] = (inF_[bcells_[i]] - inF_[icells_[i]])
@@ -209,8 +204,7 @@ void Foam::extrapolationFvPatchField<Type>::evaluate(const Pstream::commsTypes)
     {
         this->updateCoeffs();
     }
-    Info << "Extrapolation Evaluate is called! " << endl;
-
+    // Finding the Gradients
     findGradient();
 
     Field<Type>::operator=
@@ -229,7 +223,6 @@ Foam::extrapolationFvPatchField<Type>::valueInternalCoeffs
     const tmp<scalarField>&
 ) const
 {
-  Info << "value Internal Fields " << endl;
   return tmp<Field<Type>>::New(this->size(), pTraits<Type>::one);
 }
 
@@ -240,7 +233,6 @@ Foam::extrapolationFvPatchField<Type>::valueBoundaryCoeffs
     const tmp<scalarField>&
 ) const
 {
-  Info << "value Boundary Fields " << endl;
   return gradient()/this->patch().deltaCoeffs();
 }
 
