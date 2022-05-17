@@ -41,7 +41,7 @@ Description
     \vartable
         x_p      | patch values
         x_c      | internal field values
-        \nabla(x)| gradient (user-specified)
+        \nabla(x)| gradient calculated using internal field ( findGradient() )
         \Delta   | inverse distance from patch face centre to cell centre
     \endvartable
 
@@ -56,7 +56,6 @@ Usage
     <patchName>
     {
         type            extrapolation;
-        gradient        uniform 0;
     }
     \endverbatim
 
