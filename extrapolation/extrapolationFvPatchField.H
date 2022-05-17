@@ -5,7 +5,7 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2017 OpenFOAM Foundation
+    Copyright (C) Ganeshkumar-V, PhD Mechanical Engineering, IIT Gandhinagar
 -------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
@@ -30,7 +30,7 @@ Group
     grpGenericBoundaryConditions
 
 Description
-    This boundary condition supplies a fixed gradient condition, such that
+    This boundary condition supplies a extrapolation condition, such that
     the patch values are calculated using:
 
         \f[
@@ -48,7 +48,7 @@ Description
 Usage
     \table
         Property     | Description             | Required    | Default value
-        gradient     | gradient                | yes         |
+        gradient     | gradient                | no          |
     \endtable
 
     Example of the boundary condition specification:
@@ -174,14 +174,12 @@ public:
             //- Return gradient at boundary
             virtual Field<Type>& gradient()
             {
-              Info << "Inside gradient() function " << endl;
                findGradient();
               return gradient_;
             }
 
             virtual const Field<Type>& gradient() const
             {
-              Info << "Inside const gradient() function " << endl;
               //findGradient();
               return gradient_;
             }
