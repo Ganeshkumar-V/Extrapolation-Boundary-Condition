@@ -3,7 +3,7 @@ Extrapolation Boundary Condition is implemented in OpenFOAM. This boundary condi
 Extrapolation boundary condition doesnot take any inputs from the user and hence can be simply implemented as, \
 patch_name \
 { \
-      type      extrapolation; \
+ \t     type      extrapolation; \
 } \
 For more details please have a look into into the initial comments on extrapolation/extrapolationFvPatchField.H file.
 
